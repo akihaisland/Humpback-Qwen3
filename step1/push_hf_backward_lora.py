@@ -124,8 +124,8 @@ def main() -> None:
     except ImportError as e:
         raise SystemExit("请安装: pip install huggingface_hub\n" + str(e)) from e
 
-    # token = args.token or os.environ.get("HF_TOKEN") or os.environ.get("HUGGING_FACE_HUB_TOKEN")
-    token = "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"
+    token = args.token or os.environ.get("HF_TOKEN") or os.environ.get("HUGGING_FACE_HUB_TOKEN")
+    
     hf_base = (args.hf_base_model or "").strip() or _default_hf_base_model()
 
     api = HfApi(token=token)
