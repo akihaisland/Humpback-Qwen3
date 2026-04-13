@@ -1,0 +1,9 @@
+{
+  "openassistant_backward_step1": {
+    "file_name": "openassistant_backward_step1_sharegpt.jsonl",
+    "formatting": "sharegpt",
+    "columns": {
+      "messages": "conversations"
+    }
+  }
+}

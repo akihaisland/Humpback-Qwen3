@@ -1,0 +1,54 @@
+# Step4：在 Step3 筛选后的数据上做「正向」指令微调（instruction -> response），Qwen3-1.7B + LoRA
+#
+# 准备：
+# 1) 将 step3/lima_curated_for_sft_sharegpt.jsonl 复制到 <LLaMA-Factory>/data/
+# 2) 把本目录 dataset_info_fragment.json 中的 "lima_curated_step3_sft" 合并进 data/dataset_info.json
+# 3) 在 LLaMA-Factory 根目录执行：
+#    llamafactory-cli train path/to/train_qwen3_step4_forward_lora.yaml
+#
+# 勿使用 qwen3vl_* 配置；纯文本模型。若 template: qwen3 报错可改为 qwen3_nothink。
+# 精度：与 step1 相同，bf16 不支持时用 fp16。
+
+### model
+model_name_or_path: Qwen/Qwen3-1.7B
+trust_remote_code: true
+
+### method
+stage: sft
+do_train: true
+finetuning_type: lora
+lora_rank: 16
+lora_alpha: 32
+lora_dropout: 0.05
+lora_target: all
+
+### dataset
+dataset: lima_curated_step3_sft
+template: qwen3
+cutoff_len: 4096
+overwrite_cache: true
+preprocessing_num_workers: 8
+dataloader_num_workers: 2
+
+### output
+output_dir: saves/qwen3-1.7b-step4-forward-lora
+logging_steps: 10
+save_steps: 200
+save_total_limit: 3
+plot_loss: true
+overwrite_output_dir: true
+report_to: none
+
+### train
+per_device_train_batch_size: 2
+gradient_accumulation_steps: 8
+learning_rate: 1.0e-4
+num_train_epochs: 2
+lr_scheduler_type: cosine
+warmup_ratio: 0.03
+weight_decay: 0.0
+max_grad_norm: 1.0
+bf16: false
+fp16: true
+ddp_timeout: 180000000
+seed: 42

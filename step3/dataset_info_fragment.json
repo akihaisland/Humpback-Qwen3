@@ -1,0 +1,9 @@
+{
+  "lima_curated_step3_sft": {
+    "file_name": "lima_curated_for_sft_sharegpt.jsonl",
+    "formatting": "sharegpt",
+    "columns": {
+      "messages": "conversations"
+    }
+  }
+}
